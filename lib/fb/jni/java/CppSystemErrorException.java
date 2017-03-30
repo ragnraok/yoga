@@ -9,7 +9,7 @@
 
 package com.facebook.jni;
 
-import com.facebook.proguard.annotations.DoNotStrip;
+
 
 @DoNotStrip
 public class CppSystemErrorException extends CppException {

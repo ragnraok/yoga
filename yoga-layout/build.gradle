@@ -1,0 +1,57 @@
+apply plugin: 'com.android.library'
+
+targetCompatibility = '1.7'
+sourceCompatibility = '1.7'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 25
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    sourceSets.main {
+        jni.srcDirs = []
+        jniLibs.srcDir 'libs'
+    }
+
+    task ndkBuild(type:Exec) {
+        workingDir file('./')
+        commandLine getNdkBuildCmd()
+    }
+
+    tasks.withType(JavaCompile) {
+        compileTask -> compileTask.dependsOn ndkBuild
+    }
+
+    task cleanJni(type:Exec) {
+        workingDir file('./')
+        commandLine getNdkBuildCmd(), 'clean'
+    }
+
+    clean.dependsOn cleanJni
+}
+
+def getNdkPath() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    def ndkdir = properties.getProperty('ndk.dir', null)
+    if (ndkdir == null)
+        throw new GradleException('NDK location not found. Define location with ndk.dir in the local.properties file.')
+
+    return ndkdir
+}
+
+def getNdkBuildCmd() {
+
+    def ndkbuild = getNdkPath() + "/ndk-build"
+
+    return ndkbuild
+}

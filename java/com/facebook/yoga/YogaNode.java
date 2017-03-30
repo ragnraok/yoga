@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.ArrayList;
 
-import com.facebook.proguard.annotations.DoNotStrip;
+
 import com.facebook.soloader.SoLoader;
 
 @DoNotStrip

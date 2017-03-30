@@ -9,7 +9,7 @@
 
 package com.facebook.yoga;
 
-import com.facebook.proguard.annotations.DoNotStrip;
+
 import com.facebook.soloader.SoLoader;
 
 @DoNotStrip
