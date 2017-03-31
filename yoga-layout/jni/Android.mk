@@ -31,8 +31,7 @@ LOCAL_CPPFLAGS += -DLOG_TAG=\"libfb\" \
                   -Werror \
                   -Wno-unused-parameter \
                   -std=c++11 \
-                  -fPIC \
-                  -O3
+                  -fPIC
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../yoga
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../lib/fb/include/
