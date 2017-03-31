@@ -159,12 +159,12 @@ namespace {
 // if the exception is a nested_exception. If the exception is from a library
 // built with -fno-rtti, then that will crash. This avoids that.
 void rethrow_if_nested() {
-  //try {
-  //  throw;
-  //} catch (const std::nested_exception& e) {
-  //  e.rethrow_nested();
-  //} catch (...) {
-  //}
+  try {
+    throw;
+  } catch (const std::nested_exception& e) {
+    e.rethrow_nested();
+  } catch (...) {
+  }
 }
 
 // For each exception in the chain of the currently handled exception, func

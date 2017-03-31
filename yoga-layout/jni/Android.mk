@@ -20,8 +20,6 @@ LOCAL_SRC_FILES := ../../lib/fb/assert.cpp \
                    ../../lib/fb/lyra/lyra.cpp \
                    ../../lib/fb/onload.cpp
 
-LOCAL_LDLIBS += -latomic
-LOCAL_CFLAGS += -std=c++11
 LOCAL_CPPFLAGS += -DLOG_TAG=\"libfb\" \
                   -DDISABLE_CPUCAP \
                   -DDISABLE_XPLAT \
@@ -33,9 +31,8 @@ LOCAL_CPPFLAGS += -DLOG_TAG=\"libfb\" \
                   -Werror \
                   -Wno-unused-parameter \
                   -std=c++11 \
-                  -fPIC
-
-LOCAL_LDLIBS := -llog
+                  -fPIC \
+                  -O3
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../yoga
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../lib/fb/include/
@@ -49,7 +46,14 @@ include $(CLEAR_VARS)
 LOCAL_MODULE    := yoga-lib
 LOCAL_SRC_FILES := ../../yoga/YGNodeList.c \
                    ../../yoga/Yoga.c
-LOCAL_CFLAGS := -std=gnu99 -fPIC
+LOCAL_CFLAGS := -std=gnu99 \
+                -fPIC \
+                -fno-omit-frame-pointer \
+                -fexceptions \
+                -frtti \
+                -Wall \
+                -Werror \
+                -Wno-unused-parameter
 
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../yoga
@@ -67,6 +71,7 @@ LOCAL_STATIC_LIBRARIES := yoga-dep
 LOCAL_STATIC_LIBRARIES += yoga-lib
 LOCAL_CFLAGS += -std=gnu++11 -fPIC
 LOCAL_LDLIBS := -lm -llog
+LOCAL_LDLIBS += -latomic
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../yoga
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../lib/fb/include/
