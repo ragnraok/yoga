@@ -95,11 +95,11 @@ public class YogaLayout extends ViewGroup {
     applyLayoutParams(layoutParams, mYogaNode, this);
   }
 
-  YogaNode getYogaNode() {
+  public YogaNode getYogaNode() {
     return mYogaNode;
   }
 
-  YogaNode getYogaNodeForView(View view) {
+  public YogaNode getYogaNodeForView(View view) {
     return mYogaNodes.get(view);
   }
 
@@ -244,6 +244,31 @@ public class YogaLayout extends ViewGroup {
       return;
     }
 
+    final int childCount = mYogaNode.getChildCount();
+    for (int i = 0; i < childCount; i++) {
+      final YogaNode yogaNode = mYogaNode.getChildAt(i);
+      if (yogaNode.getData() instanceof YogaLayout) {
+        ((YogaLayout) yogaNode.getData()).invalidate(view);
+      }
+    }
+    invalidate();
+  }
+
+  /**
+   * Marks a particular view as "dirty" and to be relaid out.  If the view is not a child of this
+   * {@link YogaLayout}, the entire tree is traversed to find it.
+   *
+   * @param view the view to mark as dirty
+   * @param node if supplied, it will update the related {@link YogaNode} for this view
+   */
+  public void invalidate(View view, YogaNode node) {
+    if (mYogaNodes.containsKey(view)) {
+      if (node != null) {
+        mYogaNodes.put(view, node);
+      }
+      mYogaNodes.get(view).dirty();
+      return;
+    }
     final int childCount = mYogaNode.getChildCount();
     for (int i = 0; i < childCount; i++) {
       final YogaNode yogaNode = mYogaNode.getChildAt(i);
