@@ -91,7 +91,13 @@ public class YogaLayout extends ViewGroup {
     mYogaNode.setData(this);
     mYogaNode.setMeasureFunction(new ViewMeasureFunction());
 
-    final LayoutParams layoutParams = new LayoutParams(context, attrs);
+    final LayoutParams layoutParams;
+    if(attrs == null){
+      layoutParams = new LayoutParams(-1, -1);
+    }else {
+      layoutParams = new LayoutParams(context, attrs);
+    }
+
     applyLayoutParams(layoutParams, mYogaNode, this);
   }
 
